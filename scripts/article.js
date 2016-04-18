@@ -56,11 +56,22 @@ Article.fetchAll = function() {
     //       Please do NOT browse to your HTML file(s) using a "file:///" link. RUN A SERVER INSTEAD!!
 
     // 1. Retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
+    var ajaxCall = $.getJSON('/data/ipsumArticles.json');
 
-    // 2. Store the resulting JSON data with the .loadAll method,
 
-    // 3. Cache the data in localStorage so next time we won't enter this "else" block (avoids hitting the server),
+    ajaxCall.done(function (data){
+      // 2. Store the resulting JSON data with the .loadAll method,
+      Article.loadAll(data);
+      // 3. Cache the data in localStorage so next time we won't enter this "else" block (avoids hitting the server),
+      localStorage.rawData = JSON.stringify(data);
+      // 4. Render the index page (perhaps with an articleView method?).
 
-    // 4. Render the index page (perhaps with an articleView method?).
+      articleView.initIndexPage();
+
+    });
+
+
+
+
   }
 };
